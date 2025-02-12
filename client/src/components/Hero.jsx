@@ -1,6 +1,28 @@
+import { useContext, useRef } from "react"
 import { assets } from "../assets/assets"
+import { AppContext } from "../context/AppContext"
 
 const Hero = () => {
+
+  const {setSearchFilter, setIsSearched} = useContext(AppContext)
+
+  const titleRef = useRef(null)
+  const locationRef = useRef(null)
+
+  const onSearch = () => {
+    setSearchFilter({
+      title:titleRef.current.value,
+      location:locationRef.current.value
+    })
+    setIsSearched(true)
+    console.log(
+      {
+        title:titleRef.current.value,
+        location:locationRef.current.value
+      }
+    );
+  }
+
   return (
     <div className="container 2xl:px-20 mx-auto my-10">
       <div className="bg-gradient-to-r from-blue-800 to-blue-950 text-white py-16 text-center mx-2 rounded-2xl">
@@ -13,6 +35,7 @@ const Hero = () => {
                     type="text"
                     placeholder="Procure ofertas de emprego"
                     className="mx-sm:text-xs p-2 rounded outline-none w-full"
+                    ref={titleRef}
                 />
             </div>
             <div className="flex items-center">
@@ -21,9 +44,10 @@ const Hero = () => {
                     type="text"
                     placeholder="Distrito"
                     className="mx-sm:text-xs p-2 rounded outline-none w-full"
+                    ref={locationRef}
                 />
             </div>
-            <button className="bg-blue-600 px-6 py-2 rounded text-white m-1">Procurar</button>
+            <button onClick={onSearch} className="bg-blue-600 px-6 py-2 rounded text-white m-1">Procurar</button>
         </div>
       </div>
 
